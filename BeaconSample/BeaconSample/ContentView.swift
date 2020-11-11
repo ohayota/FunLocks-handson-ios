@@ -18,7 +18,6 @@ struct ContentView: View {
                     Text("Search Beacon")
                 }
                 .padding()
-//                CircleImage(image: Image("MyImage"))
                 if self.isSearching {
                     BeaconList()
                 } else {
