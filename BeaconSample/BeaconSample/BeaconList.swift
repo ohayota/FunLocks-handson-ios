@@ -10,7 +10,9 @@ import SwiftUI
 struct BeaconList: View {
     var body: some View {
         List(beaconData) { beacon in
-            BeaconRow(beacon: beacon)
+            NavigationLink(destination: BeaconDetail(beacon: beacon)) {
+                BeaconRow(beacon: beacon)
+            }
         }
     }
 }
