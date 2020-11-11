@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct BeaconDetail: View {
     var beacon: Beacon
