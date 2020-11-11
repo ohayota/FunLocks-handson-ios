@@ -9,8 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
+        VStack {
+            CircleImage()
+            VStack(alignment: .leading) {
+                Text("FunLocks")
+                    .font(.title)
+                HStack() {
+                    Text("Beacon Sample App")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("2020.11.30(Mon)")
+                        .font(.subheadline)
+                }
+            }
             .padding()
+        }
     }
 }
 
