@@ -10,7 +10,7 @@ import SwiftUI
 
 let beaconData: [Beacon] = load("beaconData.json")
 
-func load<T: Decodable>(_ filename: String) -> T {
+func load<T: Codable>(_ filename: String) -> T {
     let data: Data
     
     guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
