@@ -2,6 +2,7 @@
     {
         "id": 1001,
         "name": "Beacon 001",
+        "imageName": "MyImage",
         "info": {
             "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF0",
             "major": 100,
@@ -11,6 +12,7 @@
     {
         "id": 1002,
         "name": "Beacon 002",
+        "imageName": "MyImage",
         "info": {
             "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF1",
             "major": 100,

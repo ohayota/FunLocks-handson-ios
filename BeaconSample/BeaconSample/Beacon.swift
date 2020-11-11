@@ -8,12 +8,21 @@
 import SwiftUI
 import CoreLocation
 
-struct Beacon: Hashable, Codable, Identifiable {
+struct Beacon: Codable, Identifiable {
     var id: Int
     var name: String
-    var info = CLBeacon()
+    var imageName: String
+    var info: Info
     // {"uuid":UUID, "major":NSNumber, "minor":NSNumber, "proximity":CLProximity, "accuracy":CLLocationAccuracy, "rssi":Int, "timestamp":Date}
     // CLBeacon: https://developer.apple.com/documentation/corelocation/clbeacon
     
-    private enum CodingKeys: String, CodingKey { case id, name }
+//    private enum CodingKeys: String, CodingKey { case id, name, imageName }
+}
+
+struct Info: Codable {
+    var uuid: String
+    var major: Int
+    var minor: Int
+
+//    private enum CodingKeys: String, CodingKey { case uuid, mahor, minor }
 }

@@ -13,7 +13,59 @@ struct BeaconDetail: View {
     
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            CircleImage(image: Image(beacon.imageName))
+            VStack(alignment: .leading) {
+                Text("beacon: Beacon")
+                    .font(.title)
+                HStack() {
+                    Text("id: Int")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("\(beacon.id)")
+                        .font(.subheadline)
+                }
+                HStack() {
+                    Text("name: String")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("\(beacon.name)")
+                        .font(.subheadline)
+                }
+                HStack() {
+                    Text("imageName: String")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("\(beacon.imageName)")
+                        .font(.subheadline)
+                }
+            }
+            .padding()
+            VStack(alignment: .leading) {
+                Text("info: CLBeacon")
+                    .font(.title)
+                HStack() {
+                    Text("uuid: String")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("\(beacon.info.uuid)")
+                        .font(.subheadline)
+                }
+                HStack() {
+                    Text("major: Int")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("\(beacon.info.major)")
+                        .font(.subheadline)
+                }
+                HStack() {
+                    Text("minor: Int")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("\(beacon.info.minor)")
+                        .font(.subheadline)
+                }
+            }
+            .padding()
         }
         .navigationBarTitle(Text(beacon.name), displayMode: .inline)
     }
