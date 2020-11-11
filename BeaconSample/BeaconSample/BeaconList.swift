@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BeaconList: View {
     var body: some View {
-        List(beaconData, id: \.id) { beacon in
+        List(beaconData) { beacon in
             BeaconRow(beacon: beacon)
         }
     }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Beacon: Hashable, Codable {
+struct Beacon: Hashable, Codable, Identifiable {
     var id: Int
     var ssid: String
     var name: String
