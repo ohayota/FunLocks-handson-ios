@@ -13,6 +13,10 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Toggle(isOn: $isSearching) {
+                    Text("Search Beacon")
+                }
+                .padding()
                 CircleImage(image: Image("MyImage"))
                 if self.isSearching {
                     BeaconList()
