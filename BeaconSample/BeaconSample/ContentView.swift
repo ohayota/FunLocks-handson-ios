@@ -14,7 +14,7 @@ struct ContentView: View {
                 CircleImage(image: Image("MyImage"))
                 BeaconList()
                 VStack(alignment: .leading) {
-                    Text("FunLocks")
+                    Text("iOS & Beacon Lecture")
                         .font(.title)
                     HStack() {
                         Text("Beacon Sample App")
