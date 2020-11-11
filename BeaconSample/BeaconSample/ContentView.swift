@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isSearching = false
+    
     var body: some View {
         NavigationView {
             VStack {
                 CircleImage(image: Image("MyImage"))
-                BeaconList()
+                if self.isSearching {
+                    BeaconList()
+                } else {
+                    Spacer()
+                }
                 VStack(alignment: .leading) {
                     Text("iOS & Beacon Lecture")
                         .font(.title)
