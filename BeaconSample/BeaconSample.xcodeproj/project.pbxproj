@@ -12,6 +12,11 @@
 		24478F03255C13A7004731CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24478F02255C13A7004731CC /* Assets.xcassets */; };
 		24478F06255C13A7004731CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24478F05255C13A7004731CC /* Preview Assets.xcassets */; };
 		24478F10255C1F22004731CC /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F0F255C1F22004731CC /* CircleImage.swift */; };
+		24478F13255C22BC004731CC /* Beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F12255C22BC004731CC /* Beacon.swift */; };
+		24478F16255C2619004731CC /* BeaconRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F15255C2619004731CC /* BeaconRow.swift */; };
+		24478F1B255C272C004731CC /* beaconData.json in Resources */ = {isa = PBXBuildFile; fileRef = 24478F1A255C272C004731CC /* beaconData.json */; };
+		24478F1F255C283D004731CC /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F1E255C283D004731CC /* Data.swift */; };
+		24478F25255C2C6E004731CC /* BeaconList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F24255C2C6E004731CC /* BeaconList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		24478F05255C13A7004731CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		24478F07255C13A7004731CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24478F0F255C1F22004731CC /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
+		24478F12255C22BC004731CC /* Beacon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beacon.swift; sourceTree = "<group>"; };
+		24478F15255C2619004731CC /* BeaconRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconRow.swift; sourceTree = "<group>"; };
+		24478F1A255C272C004731CC /* beaconData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = beaconData.json; sourceTree = "<group>"; };
+		24478F1E255C283D004731CC /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		24478F24255C2C6E004731CC /* BeaconList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,9 +64,14 @@
 		24478EFD255C13A5004731CC /* BeaconSample */ = {
 			isa = PBXGroup;
 			children = (
+				24478F1E255C283D004731CC /* Data.swift */,
+				24478F1A255C272C004731CC /* beaconData.json */,
 				24478EFE255C13A5004731CC /* BeaconSampleApp.swift */,
 				24478F00255C13A5004731CC /* ContentView.swift */,
 				24478F0F255C1F22004731CC /* CircleImage.swift */,
+				24478F12255C22BC004731CC /* Beacon.swift */,
+				24478F15255C2619004731CC /* BeaconRow.swift */,
+				24478F24255C2C6E004731CC /* BeaconList.swift */,
 				24478F02255C13A7004731CC /* Assets.xcassets */,
 				24478F07255C13A7004731CC /* Info.plist */,
 				24478F04255C13A7004731CC /* Preview Content */,
@@ -131,6 +146,7 @@
 			files = (
 				24478F06255C13A7004731CC /* Preview Assets.xcassets in Resources */,
 				24478F03255C13A7004731CC /* Assets.xcassets in Resources */,
+				24478F1B255C272C004731CC /* beaconData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,8 +158,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				24478F01255C13A5004731CC /* ContentView.swift in Sources */,
+				24478F1F255C283D004731CC /* Data.swift in Sources */,
+				24478F25255C2C6E004731CC /* BeaconList.swift in Sources */,
 				24478EFF255C13A5004731CC /* BeaconSampleApp.swift in Sources */,
+				24478F16255C2619004731CC /* BeaconRow.swift in Sources */,
 				24478F10255C1F22004731CC /* CircleImage.swift in Sources */,
+				24478F13255C22BC004731CC /* Beacon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

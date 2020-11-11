@@ -11,6 +11,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             CircleImage()
+            BeaconList()
             VStack(alignment: .leading) {
                 Text("FunLocks")
                     .font(.title)
