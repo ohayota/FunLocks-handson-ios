@@ -18,6 +18,7 @@
 		24478F1F255C283D004731CC /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F1E255C283D004731CC /* Data.swift */; };
 		24478F25255C2C6E004731CC /* BeaconList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F24255C2C6E004731CC /* BeaconList.swift */; };
 		24478F29255C3043004731CC /* BeaconDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F28255C3043004731CC /* BeaconDetail.swift */; };
+		24478F33255D0201004731CC /* BeaconSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24478F32255D0201004731CC /* BeaconSearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		24478F1E255C283D004731CC /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		24478F24255C2C6E004731CC /* BeaconList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconList.swift; sourceTree = "<group>"; };
 		24478F28255C3043004731CC /* BeaconDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconDetail.swift; sourceTree = "<group>"; };
+		24478F32255D0201004731CC /* BeaconSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconSearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				24478F12255C22BC004731CC /* Beacon.swift */,
 				24478F15255C2619004731CC /* BeaconRow.swift */,
 				24478F24255C2C6E004731CC /* BeaconList.swift */,
+				24478F32255D0201004731CC /* BeaconSearchViewController.swift */,
 				24478F28255C3043004731CC /* BeaconDetail.swift */,
 				24478F02255C13A7004731CC /* Assets.xcassets */,
 				24478F07255C13A7004731CC /* Info.plist */,
@@ -168,6 +171,7 @@
 				24478F16255C2619004731CC /* BeaconRow.swift in Sources */,
 				24478F10255C1F22004731CC /* CircleImage.swift in Sources */,
 				24478F13255C22BC004731CC /* Beacon.swift in Sources */,
+				24478F33255D0201004731CC /* BeaconSearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

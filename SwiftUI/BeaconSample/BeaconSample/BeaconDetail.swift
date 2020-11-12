@@ -14,6 +14,7 @@ struct BeaconDetail: View {
     var body: some View {
         VStack {
             CircleImage(image: Image(beacon.imageName))
+            Spacer()
             VStack(alignment: .leading) {
                 Text("beacon: Beacon")
                     .font(.title)
