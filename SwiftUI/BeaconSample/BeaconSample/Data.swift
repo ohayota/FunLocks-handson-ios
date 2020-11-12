@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 let beaconData: [Beacon] = load("beaconData.json")
 

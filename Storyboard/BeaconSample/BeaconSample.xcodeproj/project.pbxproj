@@ -13,6 +13,9 @@
 		24B13619255D639C00DC8F2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24B13617255D639C00DC8F2B /* Main.storyboard */; };
 		24B1361B255D639D00DC8F2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24B1361A255D639D00DC8F2B /* Assets.xcassets */; };
 		24B1361E255D639D00DC8F2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24B1361C255D639D00DC8F2B /* LaunchScreen.storyboard */; };
+		24B13629255D64E500DC8F2B /* beaconData.json in Resources */ = {isa = PBXBuildFile; fileRef = 24B13628255D64E500DC8F2B /* beaconData.json */; };
+		24B1362C255D655000DC8F2B /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B1362B255D655000DC8F2B /* Data.swift */; };
+		24B1362F255D656200DC8F2B /* Beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B1362E255D656200DC8F2B /* Beacon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		24B1361A255D639D00DC8F2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24B1361D255D639D00DC8F2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24B1361F255D639D00DC8F2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24B13628255D64E500DC8F2B /* beaconData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = beaconData.json; path = ../../../SwiftUI/BeaconSample/BeaconSample/beaconData.json; sourceTree = "<group>"; };
+		24B1362B255D655000DC8F2B /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Data.swift; path = ../../../SwiftUI/BeaconSample/BeaconSample/Data.swift; sourceTree = "<group>"; };
+		24B1362E255D656200DC8F2B /* Beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Beacon.swift; path = ../../../SwiftUI/BeaconSample/BeaconSample/Beacon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,9 @@
 				24B13613255D639C00DC8F2B /* SceneDelegate.swift */,
 				24B13615255D639C00DC8F2B /* ViewController.swift */,
 				24B13617255D639C00DC8F2B /* Main.storyboard */,
+				24B1362E255D656200DC8F2B /* Beacon.swift */,
+				24B13628255D64E500DC8F2B /* beaconData.json */,
+				24B1362B255D655000DC8F2B /* Data.swift */,
 				24B1361A255D639D00DC8F2B /* Assets.xcassets */,
 				24B1361C255D639D00DC8F2B /* LaunchScreen.storyboard */,
 				24B1361F255D639D00DC8F2B /* Info.plist */,
@@ -125,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24B1361E255D639D00DC8F2B /* LaunchScreen.storyboard in Resources */,
+				24B13629255D64E500DC8F2B /* beaconData.json in Resources */,
 				24B1361B255D639D00DC8F2B /* Assets.xcassets in Resources */,
 				24B13619255D639C00DC8F2B /* Main.storyboard in Resources */,
 			);
@@ -139,7 +149,9 @@
 			files = (
 				24B13616255D639C00DC8F2B /* ViewController.swift in Sources */,
 				24B13612255D639C00DC8F2B /* AppDelegate.swift in Sources */,
+				24B1362F255D656200DC8F2B /* Beacon.swift in Sources */,
 				24B13614255D639C00DC8F2B /* SceneDelegate.swift in Sources */,
+				24B1362C255D655000DC8F2B /* Data.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
