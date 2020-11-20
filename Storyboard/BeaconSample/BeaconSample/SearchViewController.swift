@@ -16,38 +16,22 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var rssiAccuracyLabel: UILabel!
     
-    var locationManager: CLLocationManager?
+    var locationManager: CLLocationManager!
     var selectedBeacon: Beacon?
     
     var inRegionBeacons: [CLBeacon]?
-    
-    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.requestAlwaysAuthorization()
-
-        view.backgroundColor = .gray
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
-        tapGesture.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tapGesture)
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
         
         uuidLabel.text = selectedBeacon!.info.uuid
         majorMinorLabel.text = "\(selectedBeacon!.info.major) / \(selectedBeacon!.info.minor)"
-        updateScreen(proximity: CLProximity.unknown, rssi: nil, accuracy: nil)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        self.proximityLabel.text = "UNKNOWN"
-    }
-    
-    @objc func tap(_ gesture: UITapGestureRecognizer) {
-        print("Tap")
+        
+        updateStatus(proximity: CLProximity.unknown, rssi: nil, accuracy: nil)
     }
     
     func startScanning() {
@@ -57,11 +41,11 @@ class SearchViewController: UIViewController {
         
         let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: major, minor: minor, identifier: "MyBeacon")
         
-        locationManager?.startMonitoring(for: beaconRegion)
-        locationManager?.startRangingBeacons(in: beaconRegion)
+        locationManager.startMonitoring(for: beaconRegion)
+        locationManager.startRangingBeacons(in: beaconRegion)
     }
     
-    func updateScreen(proximity: CLProximity, rssi: Int?, accuracy: CLLocationAccuracy?) {
+    func updateStatus(proximity: CLProximity, rssi: Int?, accuracy: CLLocationAccuracy?) {
         UIView.animate(withDuration: 0.8) {
             switch proximity {
             case .far:
@@ -105,12 +89,12 @@ extension SearchViewController: CLLocationManagerDelegate {
                 dateFormatter.locale = Locale(identifier: "ja_JP")
                 dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
                 timestampLabel.text = dateFormatter.string(from: beacon.timestamp)
-                updateScreen(proximity: beacon.proximity, rssi: beacon.rssi, accuracy:
+                updateStatus(proximity: beacon.proximity, rssi: beacon.rssi, accuracy:
                                 beacon.accuracy)
                 return
             }
         }
-        updateScreen(proximity: .unknown, rssi: nil, accuracy: nil)
+        updateStatus(proximity: .unknown, rssi: nil, accuracy: nil)
     }
     
 }

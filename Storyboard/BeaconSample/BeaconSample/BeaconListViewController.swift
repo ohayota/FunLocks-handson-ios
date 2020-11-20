@@ -19,14 +19,6 @@ class BeaconListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
-        }
-    }
 
 }
 
@@ -35,9 +27,6 @@ extension BeaconListViewController: UITableViewDelegate {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
         secondViewController.selectedBeacon = beaconList[indexPath.row]
         self.present(secondViewController, animated: true, completion: nil)
-        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
-        }
     }
 }
 
@@ -50,12 +39,12 @@ extension BeaconListViewController: UITableViewDataSource {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = beaconList[indexPath.row].name
-        cell.detailTextLabel?.text = beaconList[indexPath.row].info.uuid
+        cell.detailTextLabel?.text = "\(beaconList[indexPath.row].info.uuid)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Selectable"
+        return "Observable - 観測可能"
     }
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-let beaconData: [Beacon] = load("beaconData.json")
+let beaconData: [Beacon] = load("BeaconData.json")
 
 func load<T: Codable>(_ filename: String) -> T {
     let data: Data

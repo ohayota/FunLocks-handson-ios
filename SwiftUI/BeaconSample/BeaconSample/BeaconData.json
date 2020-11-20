@@ -1,8 +1,7 @@
 [
     {
         "id": 1001,
-        "name": "Presentation Bay",
-        "imageName": "MyImage",
+        "name": "Beacon1",
         "info": {
             "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF0",
             "major": 100,
@@ -11,8 +10,7 @@
     },
     {
         "id": 1002,
-        "name": "Room 493",
-        "imageName": "MyImage",
+        "name": "Beacon2",
         "info": {
             "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF1",
             "major": 100,
