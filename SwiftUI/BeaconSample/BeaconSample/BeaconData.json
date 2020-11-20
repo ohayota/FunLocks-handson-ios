@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1001,
+        "name": "Beacon1",
+        "info": {
+            "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF0",
+            "major": 100,
+            "minor": 1
+        }
+    },
+    {
+        "id": 1002,
+        "name": "Beacon2",
+        "info": {
+            "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF1",
+            "major": 100,
+            "minor": 1
+        }
+    }
+]
