@@ -23,6 +23,7 @@ struct Info: Codable {
     let uuid: String
     let major: Int
     let minor: Int
+    var timestamp: Date?
 
 //    private enum CodingKeys: String, CodingKey { case uuid, mahor, minor }
 }
