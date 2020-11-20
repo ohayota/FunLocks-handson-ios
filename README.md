@@ -45,8 +45,30 @@ iOS端末でiBeaconの信号を受信して扱える情報の例は，以下の�
 
 本ドキュメントで基準とした開発環境は以下の通りです．バージョンが異なっても構いませんが，挙動が異なる場合があるかもしれません．
 
-Xcodeのバージョン：12.0.1
-iOSのバージョン：14.0
-対象端末：iPhone
+- Xcodeのバージョン：12.0.1
+- iOSのバージョン：14.0
+- 対象端末：iPhone
 
 ## プロジェクトの用意
+
+Xcodeを開き，最初の画面で**Create a new Xcode project**を選択します．
+
+![](README_image/01.png)
+
+**App**を選択して，**Next**を押します．
+
+![](README_image/02.png)
+
+**Product Name**に任意の名前を入力してください．**Interface**は，必ず**Storyboard**にしてください．**Life Cycle**は，**UIKit App Delegate**にしてください．確認を終えたら**Next**を押します．
+
+![](README_image/03.png)
+
+プロジェクトを保存する場所の指定画面が出ます．好きな場所を選択してください．保存を終えると，下のような画面に遷移します．
+
+![](README_image/04.png)
+
+iPhoneだけで動くアプリを作るため，**iPhone**だけにチェックをつけます．縦向き表示だけにするため，Device Orientationの**Portrait**だけチェックをつけます．
+
+![](README_image/05.png)
+
+これでプロジェクトの準備は完了です．
