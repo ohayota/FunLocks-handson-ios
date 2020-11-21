@@ -22,9 +22,9 @@ class BeaconListViewController: UIViewController {
 
 extension BeaconListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
-        secondViewController.selectedBeacon = beaconData[indexPath.row]
-        self.present(secondViewController, animated: true, completion: nil)
+        let searchViewController = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        searchViewController.selectedBeacon = beaconData[indexPath.row]
+        self.present(searchViewController, animated: true, completion: nil)
     }
 }
 
@@ -37,7 +37,7 @@ extension BeaconListViewController: UITableViewDataSource {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = beaconData[indexPath.row].name
-        cell.detailTextLabel?.text = "\(beaconData[indexPath.row].info.uuid)"
+        cell.detailTextLabel?.text = beaconData[indexPath.row].info.uuid
         return cell
     }
     

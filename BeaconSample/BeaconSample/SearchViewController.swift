@@ -19,8 +19,6 @@ class SearchViewController: UIViewController {
     var locationManager: CLLocationManager!
     var selectedBeacon: Beacon?
     
-    var inRegionBeacons: [CLBeacon]?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         

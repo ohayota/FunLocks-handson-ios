@@ -110,7 +110,7 @@ iPhoneだけで動くアプリを作るため，**iPhone**だけにチェック�
 
 ![](README_image/07.png)
 
-### ビーコンを表すデータモデル作成
+### ビーコンを表すデータモデルの作成
 
 作成したBeaconData.json内のデータを扱うため，1つのビーコンを表すためのデータモデルを作成します．データモデルには以下の情報を持たせます．
 
@@ -257,7 +257,7 @@ Main.storyboardを開き，画面右上の＋ボタンを押します．出て�
 
 同様に右のViewControllerも選択し，Classを**SearchViewController**に変更します．これで.storyboardと.swiftの関連づけが完了しました．
 
-### ビーコンリストを表示する
+## ビーコンリストを表示する
 
 下のような画面を作ります．
 
@@ -273,7 +273,7 @@ Main.storyboardを開き，画面サイズの設定をします．画面下の�
 
 ![](README_image/22.png)
 
-AutoLayoutについて説明すると面倒なので，ひとまずいい感じに大きさを調整して配置します．AutoLayoutについては発展編で触れます．
+ひとまずいい感じに大きさを調整して配置します．AutoLayoutについては~~面倒くさいので~~触れません（サンプルアプリを参照するか，メンターに質問してください）．
 
 ![](README_image/23.png)
 
@@ -367,7 +367,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
     cell.accessoryType = .disclosureIndicator
     cell.textLabel?.text = beaconData[indexPath.row].name
-    cell.detailTextLabel?.text = "\(beaconData[indexPath.row].info.uuid)"
+    cell.detailTextLabel?.text = beaconData[indexPath.row].info.uuid
     return cell
 }
 ```
@@ -377,3 +377,333 @@ cell内の**textLabel**の内容，**detailLabel**の内容を更新する処理
 ![](README_image/33.jpeg)
 
 BeaconData.jsonに入れていた情報をもとに，TableViewCellに表示する情報を変えることができました．これでBeaconListViewControllerの表示内容の実装は完了です．
+
+## ビーコン検知・情報表示を実装する
+
+下のような画面を作ります．（このREADMEでは背景色変更やフォント，レイアウトについて書かないため，下の画面とは見た目が大きく異なります．）
+
+![](README_image/IMG_1840.PNG)
+![](README_image/IMG_1841.PNG)
+![](README_image/IMG_1842.PNG)
+![](README_image/IMG_1843.PNG)
+
+### ビーコンを検知する
+
+ビーコンの検知には，iPhoneの位置情報を利用する必要があります．ユーザに対して位置情報利用許可をとるために，いくつかの設定をします．
+
+一番上の階層を選択したあと，infoタブを選択すると，以下の表示になります．
+
+![](README_image/34.png)
+
+**Custom iOS Target Properties**に2項目を追加します．項目にカーソルを合わせると，＋マークのボタンが表示されます．
+
+![](README_image/35.png)
+
+ボタンをクリックすると項目が追加されるので，以下2つの項目を探して追加します．
+
+- Privacy - Location When In Use Usage Description
+- Privacy - Location Always and When In Use Usage Description
+
+2項目とも，**Value**の欄には**ビーコンとの距離測定に利用します**と入力します．
+
+SearchViewController.swiftを開き，位置情報利用許可のダイアログを表示する処理を記述します．位置情報を扱うために以下のimport文を追加します．
+
+``` swift
+import CoreLocation
+```
+
+位置情報を扱うために使う，**CLLocationManager**を生成します．SearchViewControllerクラスの中身は，以下のように記述します．
+
+``` swift
+class SearchViewController: UIViewController {
+    
+    var locationManager: CLLocationManager!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+    }
+
+}
+```
+
+その下に，locationManagerを使うためのextensionを記述します．
+
+``` swift
+extension SearchViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways {
+            // 位置情報利用が許可されているときの処理
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+        // beaconsから，信号を受け取ったビーコンの情報を参照する
+    }
+    
+}
+```
+
+ここから先は，変数として定義した**locationManager**を使ってビーコン検知を実装します．
+
+画面を開いたときに呼び出す関数として，ビーコン検知を開始する**startScanning**を定義します．SearchViewControllerに以下を追記します．
+
+``` swift
+func startScanning() {
+    let uuid = UUID(uuidString: selectedBeacon!.info.uuid)!
+    let major = CLBeaconMajorValue(selectedBeacon!.info.major)
+    let minor = CLBeaconMinorValue(selectedBeacon!.info.minor)
+    
+    let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: major, minor: minor, identifier: "MyBeacon")
+    
+    locationManager.startMonitoring(for: beaconRegion)
+    locationManager.startRangingBeacons(in: beaconRegion)
+}
+```
+
+記述した直後には，**SelectedBeacon**という変数がないためエラーが出ます．ひとまず，`var locationManager: CLLocationManager!`の下に以下の記述を追加します．
+
+```
+var selectedBeacon: Beacon? = beaconData[0]
+```
+
+`beaconData[0]`の部分は，あとで，BeaconListViewControllerで選択したビーコンを入れるように変更します．今の状態は仮置きと覚えておいてください．
+
+先ほど定義した**startScanning**を，位置情報利用が許可されているときに呼び出すようにします．extension内の1つ目の関数を，以下のように置き換えます．
+
+``` swift
+func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    if status == .authorizedAlways {
+        if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+            if CLLocationManager.isRangingAvailable() {
+                startScanning()
+            }
+        }
+    }
+}
+```
+
+これで，自動的にビーコン検知が開始されるようになりました．
+
+### ビーコンリストからの遷移を実装する
+
+BeaconListViewController.swiftに戻り，ビーコン検知・情報表示画面への遷移を実装します．UITableViewDelegateについてのextensionを，以下の記述に置き換えます．
+
+```
+extension BeaconListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let searchViewController = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        searchViewController.selectedBeacon = beaconData[indexPath.row]
+        self.present(searchViewController, animated: true, completion: nil)
+    }
+}
+```
+
+このままビルドすると，`withIdentifier: "SearchViewController"`の部分でエラーが出ます．これを避けるために，一度**Main.storyboard**を開きます．右のSearchViewControllerを選択し，画面右のエリアの**Identity**を編集します．
+
+![](README_image/36.png)
+
+以下の2項目を編集します．
+
+- Storyboard IDに**SearchViewController**と書きます．
+- **Use Storyboard ID**にチェックを入れます．
+
+これが終わったらビルドしてください．TableViewCellをタップすると，下から新しい画面が出てくるようになっているはずです．これで画面遷移の実装ができました．
+
+先ほど追記した`searchViewController.selectedBeacon = beaconData[indexPath.row]`によって，SearchViewControllerにビーコンの情報を渡すことができました．SearchViewControllerで仮置きにしていた変数**selectedBeacon**を，以下のように置き換えてください．
+
+``` swift
+var selectedBeacon: Beacon?
+```
+
+### ビーコンの情報表示を実装する
+
+前の画面（BeaconListViewController.swift）で選択したビーコンを検知したとき，信号の情報を表示するようにします．
+
+Main.storyboardを開きます．画面右上の＋ボタンを押し，SearchViewControllerに，Labelを5つドラッグ＆ドロップします．**配置したLabelは，できるだけ横幅を広げておいてください．**
+
+![](README_image/37.png)
+
+5つのLabelを，SearchViewController.swiftに関連づけます（tableViewを関連づけたときと同じような手順です）．関連づけたLabelには，順番に以下5つの名前をつけてください．
+
+- proximityLabel
+- uuidLabel
+- majorMinorLabel
+- timestampLabel
+- rssiAccuracyLabel
+
+関連づけができると，下のようなコードになります．
+
+![](README_image/38.png)
+
+それぞれのLabelに表示する情報は，以下の通りです．
+
+- ビーコンの近接度（IMMEDIATE，NEAR，FAR，UNKNOWN）
+- ビーコンのUUID
+- ビーコンのメジャー値とマイナー値
+- ビーコンの信号が最後に観測された時刻
+- ビーコンの信号強度，概算距離（単位：メートル）
+
+ここから，検知したビーコン信号の値を取り出す処理を追加します．
+
+まずは，前の画面（BeaconListViewController）から渡された**selectedBeacon**の値（以下3つ）を利用します．
+
+- ビーコンのUUID
+- ビーコンのメジャー値とマイナー値
+
+selectedBeaconの値を，2つのラベルに表示します．関数**viewDidLoad**を以下のように記述します．
+
+``` swift
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    locationManager = CLLocationManager()
+    locationManager.delegate = self
+    locationManager.requestAlwaysAuthorization()
+    
+    uuidLabel.text = selectedBeacon!.info.uuid
+    majorMinorLabel.text = "\(selectedBeacon!.info.major) / \(selectedBeacon!.info.minor)"
+}
+```
+
+これによって，**uuid**，**major**，**minor**の3つが表示されるようになりました．ビルドしてみます．
+
+![](README_image/39.png)
+
+画面が小さい端末だと，値が見切れてしまう場合があります．値が見切れてしまう場合，Labelの設定で文字サイズを小さくするか，表示可能な行数を2行に増やすかで対処してください．
+
+続いて，観測したビーコン信号から以下3つの値を取得し，残りのLabelに表示します．
+
+- ビーコンの近接度（IMMEDIATE，NEAR，FAR，UNKNOWN）
+- ビーコンの信号が最後に観測された時刻
+- ビーコンの信号強度，概算距離（単位：メートル）
+
+近接度を取得して，表示する値を変える関数を追記します．
+
+``` swift
+func updateStatus(proximity: CLProximity, rssi: Int?, accuracy: CLLocationAccuracy?) {
+    switch proximity {
+    case .far:
+        self.proximityLabel.text = "FAR"
+    case .near:
+        self.proximityLabel.text = "NEAR"
+    case .immediate:
+        self.proximityLabel.text = "IMMEDIATE"
+    default:
+        self.proximityLabel.text = "UNKNOWN"
+    }
+}
+```
+
+関数**updateStatus**によって，ビーコンへ近ければ**IMMEDIATE**や**NEAR**，ビーコンから遠ければ**FAR**や**UNKNOWN**が表示されます．
+
+信号強度と概算距離を表示する記述を追加すると，以下のようになります．
+
+``` swift
+func updateStatus(proximity: CLProximity, rssi: Int?, accuracy: CLLocationAccuracy?) {
+    switch proximity {
+    case .far:
+        self.proximityLabel.text = "FAR"
+        self.rssiAccuracyLabel.text = "\(rssi!) / \(floor(Double(accuracy!)*100)/100)(m)"
+    case .near:
+        self.proximityLabel.text = "NEAR"
+        self.rssiAccuracyLabel.text = "\(rssi!) / \(floor(Double(accuracy!)*100)/100)(m)"
+    case .immediate:
+        self.proximityLabel.text = "IMMEDIATE"
+        self.rssiAccuracyLabel.text = "\(rssi!) / \(floor(Double(accuracy!)*100)/100)(m)"
+    default:
+        self.proximityLabel.text = "UNKNOWN"
+        self.rssiAccuracyLabel.text = "- / -"
+    }
+}
+```
+
+**rssi**はInt型です．**accuracy**は[CLLocationAccurary](https://developer.apple.com/documentation/corelocation/cllocationaccuracy)型のため，Double型に変換してから，**floor**関数によって小数点第3位以下を丸めました．
+
+次に，定義した関数**updateStatus**を呼び出す部分の処理を記述します．**extension SearchViewController: CLLocationManagerDelegate**内の2つ目の関数で，信号を検知できたビーコンたちの情報を扱うことができます．以下のように書き換えます．
+
+``` swift
+func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+    for beacon in beacons {
+        // 検知できたビーコンが1個でもあった場合の処理
+    }
+    updateStatus(proximity: .unknown, rssi: nil, accuracy: nil)
+}
+```
+
+for文の中で，検知できたビーコンが1個でもあった場合の処理を記述します．今回は，**selectedBeacon**が持つ**uuid**と，検知できたビーコンの**uuid**が一致したときに情報を取得します．一致した時の条件をif文として追加すると，以下のようになります．
+
+``` swift
+func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+    for beacon in beacons {
+        if beacon.uuid.uuidString == selectedBeacon!.info.uuid {
+            // 最終観測時刻のLabelを更新する処理
+            // 画面を更新する処理
+            return // 1個でも一致したら他のビーコンは確認不要なため，関数から脱出する
+        }
+    }
+    updateStatus(proximity: .unknown, rssi: nil, accuracy: nil)
+}
+```
+
+uuidが一致したビーコンの観測時刻を取り出し，表示するまでの処理を追加すると，以下のようになります．
+
+``` swift
+func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+    for beacon in beacons {
+        if beacon.uuid.uuidString == selectedBeacon!.info.uuid {
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ja_JP")
+            dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+            timestampLabel.text = dateFormatter.string(from: beacon.timestamp)
+            // 画面を更新する処理
+            return // 1個でも一致したら他のビーコンは確認不要なため，関数から脱出する
+        }
+    }
+    updateStatus(proximity: .unknown, rssi: nil, accuracy: nil)
+}
+```
+
+最終観測時刻は[CLBeacon](https://developer.apple.com/documentation/corelocation/clbeacon)型の中にある**timestamp**という変数で取得できます．timestampを日本標準時に直し，みやすい形式に書き換え，Labelのテキストとして表示します．
+
+画面を更新する処理を追加すると，以下のようになります．
+
+``` swift
+func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+    for beacon in beacons {
+        if beacon.uuid.uuidString == selectedBeacon!.info.uuid {
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ja_JP")
+            dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+            timestampLabel.text = dateFormatter.string(from: beacon.timestamp)
+            updateStatus(proximity: beacon.proximity, rssi: beacon.rssi, accuracy: beacon.accuracy)
+            return // 1個でも一致したら他のビーコンは確認不要なため，関数から脱出する
+        }
+    }
+    updateStatus(proximity: .unknown, rssi: nil, accuracy: nil)
+}
+```
+
+[CLBeacon](https://developer.apple.com/documentation/corelocation/clbeacon)型から**proximity**，**rssi**，**accuracy**を取り出して，関数**updateStatus**に渡すことで画面が更新されます．
+
+ビルドすると，以下のような画面になります．
+
+
+
+これでビーコン検知・情報表示画面の機能を実装でき，サンプルアプリ同様の最低限の機能が完成しました．
+
+## その他
+
+### 近接度によって背景色を更新する
+
+配布したサンプルアプリ内の関数**updateStatus**をご覧ください．
+
+### AutoLayout
+
+ここに書くのは正直面倒なので，サンプルアプリの**Main.storyboard**を参照した上で，メンターに質問してください．
+
+サンプルアプリの配置は，情報が見やすくなるようにしたつもりです．
