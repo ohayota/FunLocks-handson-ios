@@ -11,8 +11,6 @@ class BeaconListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var beaconList = beaconData
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,21 +23,21 @@ class BeaconListViewController: UIViewController {
 extension BeaconListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
-        secondViewController.selectedBeacon = beaconList[indexPath.row]
+        secondViewController.selectedBeacon = beaconData[indexPath.row]
         self.present(secondViewController, animated: true, completion: nil)
     }
 }
 
 extension BeaconListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return beaconList.count
+        return beaconData.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = beaconList[indexPath.row].name
-        cell.detailTextLabel?.text = "\(beaconList[indexPath.row].info.uuid)"
+        cell.textLabel?.text = beaconData[indexPath.row].name
+        cell.detailTextLabel?.text = "\(beaconData[indexPath.row].info.uuid)"
         return cell
     }
     
