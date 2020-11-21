@@ -5,8 +5,7 @@
 //  Created by Yota Nakamura on 2020/11/11.
 //
 
-import SwiftUI
-import CoreLocation
+import Foundation
 
 struct Beacon: Codable, Identifiable {
     let id: Int

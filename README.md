@@ -72,3 +72,96 @@ iPhoneだけで動くアプリを作るため，**iPhone**だけにチェック�
 ![](README_image/05.png)
 
 これでプロジェクトの準備は完了です．
+
+### ビーコン検知用のデータ作成
+
+検知したいビーコンの情報を，アプリ側に予め用意しておきます．
+
+**BeaconData.json**という名前のファイルを，任意のエディタで作成してください．作成できたら，以下の記述をコピー＆ペーストして保存してください．
+
+``` json
+[
+    {
+        "id": 1001,
+        "name": "Beacon1",
+        "info": {
+            "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF0",
+            "major": 100,
+            "minor": 1
+        }
+    },
+    {
+        "id": 1002,
+        "name": "Beacon2",
+        "info": {
+            "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF1",
+            "major": 100,
+            "minor": 1
+        }
+    }
+]
+```
+
+保存できたら，プロジェクトに**BeaconData.json**を追加します．**BeaconSample**というディレクトリにカーソルを合わせて右クリックし，出てきたメニューの**Add Files to "BeaconSample"...**を選択してください．出てきた画面で，**BeaconData.json**を選択して**Add**を押すと，プロジェクトに追加されます．
+
+![](README_image/06.png)
+
+出てきた画面で，**BeaconData.json**を選択して**Add**を押すと，プロジェクトに追加されます．正しく追加できると，以下のような表示になります．
+
+![](README_image/07.png)
+
+### ビーコンを表すデータモデル作成
+
+作成したBeaconData.json内のデータを扱うため，1つのビーコンを表すためのデータモデルを作成します．データモデルには以下の情報を持たせます．
+
+- id（ビーコンごとに割り振るID）
+- name（ビーコンにつける名前）
+- info（ビーコンが持つ値を格納するデータモデルInfo）
+
+上記のうち，**info**に含まれるデータは以下の情報です．（各値の役割については，**ビーコン信号を利用して得られる情報**を参照）
+
+- uuid
+- major
+- minor
+
+これら2つのデータモデルを実現します．画面上のメニューから，File>New>File...を選択してください．
+
+![](README_image/08.png)
+
+**Swift File**を選択します．
+
+![](README_image/09.png)
+
+名前を**Beacon.swift**にして，**Create**を押します．
+
+![](README_image/10.png)
+
+作成されたファイルは，下図のような中身が書かれています．
+
+![](README_image/11.png)
+
+Beacon.swiftにBeaconモデルを作ります．以下の記述を追加します．
+
+``` swift
+struct Beacon: Codable, Identifiable {
+    let id: Int
+    let name: String
+    let info: Info
+}
+```
+
+[Codable](https://developer.apple.com/documentation/swift/codable)は，**ビーコン検知用のデータ作成**で作成したJSONファイルをデコード（Swiftで扱える形式に変換）するためにつけます．
+
+[Identifiable](https://developer.apple.com/documentation/swift/identifiable)は，一つ一つのオブジェクトが**一意（他と重複しない）であることを保証する**ための記述です．Beaconモデルの中で一意な変数は，**id**です．
+
+続いて，Beaconモデル内で使われている**Info**を作ります．以下の記述を追加します．
+
+``` swift
+struct Info: Codable {
+    let uuid: String
+    let major: Int
+    let minor: Int
+}
+```
+
+これで，データモデルを作れました．
