@@ -165,3 +165,47 @@ struct Info: Codable {
 ```
 
 これで，データモデルを作れました．
+
+### JSONファイルをデコードする関数を作成
+
+ビーコンのデータモデルに合わせて，JSONをデコードする関数を作ります．
+
+**BeaconSample**というディレクトリにカーソルを合わせて右クリックし，出てきたメニューの**New File...**を選択してください．
+
+![](README_image/12.png)
+
+出てきた画面で，**Swift File**を選択して**Next**を押すと，名前の入力画面が出ます．**Data.swift**として，**Create**を押すと追加されます．
+
+![](README_image/13.png)
+
+Data.swiftを開き，以下の記述を追加します．
+
+``` swift
+import UIKit
+
+let beaconData: [Beacon] = load("BeaconData.json")
+
+func load<T: Codable>(_ filename: String) -> T {
+    let data: Data
+    
+    guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
+        else {
+            fatalError("Couldn't find \(filename) in main bundle.")
+    }
+    
+    do {
+        data = try Data(contentsOf: file)
+    } catch {
+        fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
+    }
+    
+    do {
+        let decoder = JSONDecoder()
+        return try decoder.decode(T.self, from: data)
+    } catch {
+        fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
+    }
+}
+```
+
+これにより，他のファイル内でも，ビーコンの情報を格納した**beaconData**という配列が使えるようになりました．
