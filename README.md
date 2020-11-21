@@ -695,7 +695,7 @@ func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLB
 
 ビルドすると，以下のような画面になります．
 
-
+![](README_image/40.png)
 
 これでビーコン検知・情報表示画面の機能を実装でき，サンプルアプリ同様の最低限の機能が完成しました．
 
