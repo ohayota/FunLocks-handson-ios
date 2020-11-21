@@ -9,6 +9,7 @@ import UIKit
 
 let beaconData: [Beacon] = load("BeaconData.json")
 
+// MARK: - JSONをデコードする
 func load<T: Codable>(_ filename: String) -> T {
     let data: Data
     

@@ -32,6 +32,7 @@ class SearchViewController: UIViewController {
         updateStatus(proximity: CLProximity.unknown, rssi: nil, accuracy: nil)
     }
     
+    // MARK: - 信号検知を開始する
     func startScanning() {
         let uuid = UUID(uuidString: selectedBeacon!.info.uuid)!
         let major = CLBeaconMajorValue(selectedBeacon!.info.major)
@@ -43,6 +44,7 @@ class SearchViewController: UIViewController {
         locationManager.startRangingBeacons(in: beaconRegion)
     }
     
+    // MARK: - ビーコンとの近さによって値や背景色を変える
     func updateStatus(proximity: CLProximity, rssi: Int?, accuracy: CLLocationAccuracy?) {
         UIView.animate(withDuration: 0.8) {
             switch proximity {
@@ -70,6 +72,7 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: CLLocationManagerDelegate {
     
+    // MARK: - 位置情報取得が許可されているかを取得する
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
             if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
@@ -80,6 +83,7 @@ extension SearchViewController: CLLocationManagerDelegate {
         }
     }
     
+    // MARK: - 信号を拾ったビーコンの情報を取得する
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         for beacon in beacons {
             if beacon.uuid.uuidString == selectedBeacon!.info.uuid {
@@ -87,9 +91,8 @@ extension SearchViewController: CLLocationManagerDelegate {
                 dateFormatter.locale = Locale(identifier: "ja_JP")
                 dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
                 timestampLabel.text = dateFormatter.string(from: beacon.timestamp)
-                updateStatus(proximity: beacon.proximity, rssi: beacon.rssi, accuracy:
-                                beacon.accuracy)
-                return
+                updateStatus(proximity: beacon.proximity, rssi: beacon.rssi, accuracy: beacon.accuracy)
+                return // 1個でも一致したら他のビーコンは確認不要なため，関数から脱出する
             }
         }
         updateStatus(proximity: .unknown, rssi: nil, accuracy: nil)
