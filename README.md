@@ -2,10 +2,13 @@
 
 FunLocks「iOS&amp;ビーコン勉強会」向けサンプルアプリ
 
-ビーコンの検知機能を持ち，検知した信号の情報を表示するアプリ．
+ビーコンの検知機能を持ち，ビーコンから検知した信号の情報を表示するアプリ．下図のようなアプリを作る手順をREADMEに記載しました．（このREADMEでは背景色変更やフォント，レイアウトについて書かないため，下の画面とは見た目が大きく異なります．機能自体は同じです．）
 
 ![](README_image/IMG_1847.PNG)
 ![](README_image/IMG_1843.PNG)
+![](README_image/IMG_1842.PNG)
+![](README_image/IMG_1841.PNG)
+![](README_image/IMG_1840.PNG)
 
 ## BLEビーコン
 
@@ -54,8 +57,6 @@ iOS端末でiBeaconの信号を受信して扱える情報の例は，以下の�
 - 対象端末：iPhone
 
 ## プロジェクトの用意
-
-ここから下のようなアプリを作ります．（このREADMEでは背景色変更やフォント，レイアウトについて書かないため，下の画面とは見た目が大きく異なります．機能は同じです．）
 
 Xcodeを開き，最初の画面で**Create a new Xcode project**を選択します．
 
@@ -176,7 +177,7 @@ struct Info: Codable {
 
 ビーコンのデータモデルに合わせて，JSONをデコードする関数を作ります．
 
-**BeaconSample**というディレクトリにカーソルを合わせて右クリックし，出てきたメニューの**New File...**を選択してください．
+**BeaconSample**というディレクトリにカーソルを合わせて右クリックし，出てきたメニューの**New File**を選択してください．
 
 ![](README_image/12.png)
 
@@ -389,6 +390,9 @@ BeaconData.jsonに入れていた情報をもとに，TableViewCellに表示す�
 下のような情報を表示する画面を作ります．（このREADMEでは背景色変更やフォント，レイアウトについて書かないため，下の画面とは見た目が大きく異なります．）
 
 ![](README_image/IMG_1843.PNG)
+![](README_image/IMG_1842.PNG)
+![](README_image/IMG_1841.PNG)
+![](README_image/IMG_1840.PNG)
 
 ### ビーコンを検知する
 
@@ -470,7 +474,7 @@ func startScanning() {
 
 記述した直後には，**SelectedBeacon**という変数がないためエラーが出ます．ひとまず，`var locationManager: CLLocationManager!`の下に以下の記述を追加します．
 
-```
+``` swift
 var selectedBeacon: Beacon? = beaconData[0]
 ```
 
@@ -496,7 +500,7 @@ func locationManager(_ manager: CLLocationManager, didChangeAuthorization status
 
 BeaconListViewController.swiftに戻り，ビーコン検知・情報表示画面への遷移を実装します．UITableViewDelegateについてのextensionを，以下の記述に置き換えます．
 
-```
+``` swift
 extension BeaconListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let searchViewController = self.storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
