@@ -4,6 +4,9 @@ FunLocks「iOS&amp;ビーコン勉強会」向けサンプルアプリ
 
 ビーコンの検知機能を持ち，検知した信号の情報を表示するアプリ．
 
+![](README_image/IMG_1847.PNG)
+![](README_image/IMG_1843.PNG)
+
 ## BLEビーコン
 
 ### BLEビーコンとは何か
