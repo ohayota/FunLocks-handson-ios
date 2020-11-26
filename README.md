@@ -90,18 +90,27 @@ iPhoneだけで動くアプリを作るため，**iPhone**だけにチェック�
 [
     {
         "id": 1001,
-        "name": "Beacon1",
+        "name": "495（廊下側）",
         "info": {
-            "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF0",
-            "major": 100,
-            "minor": 1
+            "uuid": "48534442-4C45-4144-80C0-180000000000",
+            "major": 4,
+            "minor": 0
         }
     },
     {
         "id": 1002,
-        "name": "Beacon2",
+        "name": "495（駐車場側）",
         "info": {
-            "uuid": "48534442-4C45-4144-80C0-1800FFFFFFF1",
+            "uuid": "48534442-4C45-4144-80C0-180000000000",
+            "major": 4,
+            "minor": 1
+        }
+    },
+    {
+        "id": 1003,
+        "name": "個人ビーコン",
+        "info": {
+            "uuid": "48534442-4C45-4144-80C0-1800FFFFFFFF",
             "major": 100,
             "minor": 1
         }
@@ -465,10 +474,10 @@ func startScanning() {
     let major = CLBeaconMajorValue(selectedBeacon!.info.major)
     let minor = CLBeaconMinorValue(selectedBeacon!.info.minor)
     
-    let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: major, minor: minor, identifier: "MyBeacon")
+    let beaconRegion = CLBeaconRegion(beaconIdentityConstraint: CLBeaconIdentityConstraint(uuid: uuid, major: major, minor: minor), identifier: "MyBeacon")
     
     locationManager.startMonitoring(for: beaconRegion)
-    locationManager.startRangingBeacons(in: beaconRegion)
+    locationManager.startRangingBeacons(satisfying: beaconRegion.beaconIdentityConstraint)
 }
 ```
 
