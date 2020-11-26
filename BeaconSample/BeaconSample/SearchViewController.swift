@@ -38,10 +38,12 @@ class SearchViewController: UIViewController {
         let major = CLBeaconMajorValue(selectedBeacon!.info.major)
         let minor = CLBeaconMinorValue(selectedBeacon!.info.minor)
         
-        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: major, minor: minor, identifier: "MyBeacon")
+        let beaconRegion = CLBeaconRegion(beaconIdentityConstraint: CLBeaconIdentityConstraint(uuid: uuid, major: major, minor: minor), identifier: "MyBeacon")
+        
+//        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, major: major, minor: minor, identifier: "MyBeacon")
         
         locationManager.startMonitoring(for: beaconRegion)
-        locationManager.startRangingBeacons(in: beaconRegion)
+        locationManager.startRangingBeacons(satisfying: beaconRegion.beaconIdentityConstraint)
     }
     
     // MARK: - ビーコンとの近さによって値や背景色を変える
